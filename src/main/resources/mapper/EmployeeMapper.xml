@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lizhi.springboot_crud.mapper.EmployeeMapper">
+
+
+    <resultMap id="BaseResultMap" type="cn.lizhi.springboot_crud.entity.Employee">
+        <id column="emp_id" jdbcType="INTEGER" property="empId"/>
+        <result column="emp_name" jdbcType="VARCHAR" property="empName"/>
+        <result column="gender" jdbcType="CHAR" property="gender"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="d_id" jdbcType="INTEGER" property="dId"/>
+    </resultMap>
+
+
+    <!-- 联合查询，员工及其部门信息 -->
+    <resultMap id="BaseResultMapWithDept" type="cn.lizhi.springboot_crud.entity.Employee">
+        <id column="emp_id" jdbcType="INTEGER" property="empId"/>
+        <result column="emp_name" jdbcType="VARCHAR" property="empName"/>
+        <result column="gender" jdbcType="CHAR" property="gender"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="d_id" jdbcType="INTEGER" property="dId"/>
+        <association property="department" javaType="cn.lizhi.springboot_crud.entity.Department">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"/>
+        </association>
+    </resultMap>
+
+    <select id="selectByPrimaryKeyWithDept" parameterType="Integer" resultMap="BaseResultMapWithDept">
+        SELECT e.*,d.dept_id,dept_name
+        from tbl_emp e left join tbl_dept d
+        on e.d_id=d.dept_id
+        where emp_id = #{empId,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="selectByOrderWithDept" resultMap="BaseResultMapWithDept">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        e.*,d.dept_id,dept_name
+        FROM tbl_emp e
+        left join tbl_dept d on e.`d_id`=d.`dept_id`
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+
+
+
+</mapper>

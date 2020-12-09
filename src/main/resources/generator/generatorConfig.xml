@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="config.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="cn.lizhi.springboot_crud.entity"
+                            targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources"/>
+
+        <javaClientGenerator targetPackage="cn.lizhi.springboot_crud.mapper"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <!-- 需要生成的表,指定生成的表，指定对应实体类名，实体类接口名 -->
+
+<!--        <table tableName="tbl_emp" domainObjectName="Employee">-->
+<!--            <generatedKey column="emp_id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
+<!--        <table tableName="tbl_dept" domainObjectName="Department">-->
+<!--            <generatedKey column="dept_id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
+        <table tableName="tbl_admin" domainObjectName="Admin">
+            <generatedKey column="admin_user_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,32 @@
+server:
+  servlet:
+    context-path: /boot_crud
+
+spring:
+  datasource:
+    username:
+    password:
+    url:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  messages:
+    encoding: UTF-8
+    basename: i18n.login
+  thymeleaf:
+    cache: false # 关闭缓存，可预编译页面
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.lizhi.entity
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  offset-as-page-num: true
+
+
