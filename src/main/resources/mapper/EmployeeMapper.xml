@@ -46,7 +46,25 @@
         </if>
     </select>
 
-
+    <select id="selectEmpByConditionWithDept" parameterType="cn.lizhi.springboot_crud.entity.Employee"
+            resultMap="BaseResultMapWithDept">
+        select distinct
+        e.*,d.dept_id,dept_name
+        FROM tbl_emp e
+        left join tbl_dept d on e.`d_id`=d.`dept_id`
+        <where>
+            <if test="empName!=null and empName!=''">
+                emp_name like '${empName}%'
+            </if>
+            <if test="gender!=null and gender!=''">
+               and gender=#{gender}
+            </if>
+            <if test="dId!=null and dId!=''">
+                and d_id=#{dId}
+            </if>
+        </where>
+        order By emp_id
+    </select>
 
 
 </mapper>

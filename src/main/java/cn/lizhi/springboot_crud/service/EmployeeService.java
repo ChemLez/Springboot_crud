@@ -4,7 +4,6 @@ import cn.lizhi.springboot_crud.entity.Employee;
 import cn.lizhi.springboot_crud.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ public class EmployeeService {
 
     /**
      * 查询所有员工信息
+     *
      * @return
      */
     public List<Employee> getAll() {
@@ -27,6 +27,7 @@ public class EmployeeService {
 
     /**
      * 带部门信息的员工信息查询
+     *
      * @return
      */
     public List<Employee> getAllWithDept() {
@@ -39,6 +40,7 @@ public class EmployeeService {
 
     /**
      * 新增员工
+     *
      * @param employee
      */
     public void saveEmp(Employee employee) {
@@ -47,6 +49,7 @@ public class EmployeeService {
 
     /**
      * 员工姓名是否已经存在
+     *
      * @param empName
      * @return
      */
@@ -65,6 +68,7 @@ public class EmployeeService {
 
     /**
      * 单个员工信息的查询
+     *
      * @param empId
      * @return
      */
@@ -78,6 +82,7 @@ public class EmployeeService {
 
     /**
      * 员工信息更新
+     *
      * @param employee
      */
     public void updateEmpById(Employee employee) {
@@ -86,6 +91,7 @@ public class EmployeeService {
 
     /**
      * 根据主键删除员工信息
+     *
      * @param integer
      */
     public int deleteEmpById(Integer integer) {
@@ -99,6 +105,17 @@ public class EmployeeService {
         criteria.andIn("empId", ids);
         int i = mapper.deleteByExample(example);
         return i;
+    }
+
+
+    /**
+     * 实现模糊查询;姓名、性别、部门
+     * @param employee
+     * @return
+     */
+    public List<Employee> getEmpByCondition(Employee employee) {
+        List<Employee> employees = mapper.selectEmpByConditionWithDept(employee);
+        return employees;
     }
 
 

@@ -12,4 +12,6 @@ import java.util.List;
 public interface EmployeeMapper extends Mapper<Employee> {
 
     List<Employee> selectByOrderWithDept(Example example);
+
+    List<Employee> selectEmpByConditionWithDept(Employee employee);
 }

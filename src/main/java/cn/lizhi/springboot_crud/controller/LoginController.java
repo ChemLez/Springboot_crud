@@ -21,7 +21,7 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model, HttpSession session) {
 
         Admin login = adminService.login(username, password);
         if (login == null) {
@@ -29,6 +29,8 @@ public class LoginController {
             model.addAttribute("msg", "用户名或者密码错误");
             return "index";
         } else {
+            // 将用户信息保存到session中
+            session.setAttribute("user",login);
             return "redirect:list.html";
         }
     }

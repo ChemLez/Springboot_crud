@@ -31,12 +31,14 @@ public class EmployeeController {
      *
      * @return
      */
-    @RequestMapping("/emps")
+//    @RequestMapping("/emps")
     public Msg getAll(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<Employee> employees = employeeService.getAllWithDept();
-        PageInfo page = new PageInfo(employees, 5); // 对employees进行分页的封装，查询页数为5页
-        Msg msg = Msg.success().add("pages", page);
+        PageInfo page = new PageInfo(employees, 5); // 对employees进行分页的封装，查询页数为5页，分页栏中前后的页码显示5页
+        List<Department> depts = departmentService.getDept();
+        Msg msg = Msg.success().add("pages", page).add("departments", depts);
+
         return msg;
     }
 
@@ -59,6 +61,7 @@ public class EmployeeController {
 
     /**
      * 用户更新
+     *
      * @param employee
      * @param empId
      * @param result
@@ -134,6 +137,7 @@ public class EmployeeController {
 
     /**
      * 根据id对employee进行删除
+     *
      * @param integer
      * @return
      */
@@ -148,6 +152,12 @@ public class EmployeeController {
         }
     }
 
+    /**
+     * 批量删除
+     *
+     * @param idString
+     * @return
+     */
     @DeleteMapping("/emp")
     public Msg deleteBatchEmp(@RequestParam("empIds") String idString) {
         ArrayList<Integer> list = new ArrayList<Integer>();
@@ -157,9 +167,25 @@ public class EmployeeController {
         }
         int i = employeeService.deleteBatchEmp(list);
         if (i > 0) {
-           return Msg.success();
+            return Msg.success();
         } else {
-          return   Msg.fail();
+            return Msg.fail();
         }
+    }
+
+    /**
+     * 条件查询 -- 适用于模糊查询
+     * @param employee
+     * @param pn
+     * @return
+     */
+    @RequestMapping("/conditionalEmp")
+    public Msg getEmpByCondition(Employee employee, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5);
+        List<Employee> employees = employeeService.getEmpByCondition(employee);
+        PageInfo<Employee> page = new PageInfo<>(employees, 5);
+        List<Department> depts = departmentService.getDept();
+        return Msg.success().add("pages", page).add("departments", depts);
+
     }
 }
