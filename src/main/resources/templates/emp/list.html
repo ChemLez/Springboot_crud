@@ -212,6 +212,8 @@
             // 将每一个员工添加到表格中
             var Id = emp_list[i].empId;
             var emp = emp_list[i];
+            var departmentName = (emp.dId === 1 ? '测试部' : '开发部');
+            console.log(emp);
             var empId = i + 1;
             var tr = $('<tr></tr>'); // 将该标签转换为BOM对象
             var checkbox = $('<td><input type="checkbox" class="checkbox_item"></td>').attr('empId', Id);
@@ -221,7 +223,8 @@
             var gender = emp.gender == 'M' ? '男' : '女';
             $(tr).append('<td>' + gender + '</td>');
             $(tr).append('<td>' + emp.email + '</td>');
-            $(tr).append('<td>' + emp.department.deptName + '</td>');
+
+            $(tr).append('<td>' + departmentName + '</td>');
             var button_01 = $('<button type="button" class="btn btn-primary update_btn" style="margin-right: 4px">').attr('update_empId', Id).append('<span class="glyphicon glyphicon-pencil" aria-hidden="true"/>编辑</button>');
             var button_02 = $('<button type="button" class="btn btn-danger delete_btn">').attr('del_empId', Id).append('<span class="glyphicon glyphicon-trash" aria-hidden="true"/>删除</button>');
             var td = $('<td></td>');
@@ -325,6 +328,7 @@
                 pn: index
             }) + "&" + $('#conditionalForm').serialize(),
             success: function (result) {
+                console.log(result);
                 // 展示员工列表
                 get_emps_list(result);
                 // 展示分页信息

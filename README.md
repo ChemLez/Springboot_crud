@@ -20,5 +20,11 @@
 
 ![页面](./images/pages.png)
 
+3. 项目跑通流程
+- 项目中给出了SQL脚本，首先在自己的数据库中运行该脚本即可(脚本最后的**insert操作，只能操作一次**)
+- 更改项目中application.yaml和config.properties中的数据库配置文件(改成自己的)
+- 运行项目test包中的MapperTest.testCRUD 测试函数，目的制造假数据
+- 确保依赖下载完成后，即可启动项目
+
 > 持续更新文档...
 

@@ -37,9 +37,11 @@ public class MapperTest {
     public void testCRUD() {
 
 //        employeeMapper.insert(new Employee(null, "Jerry", "M", "Jerry@163.com", 1));
-        for (int i = 0; i < 1000; ++i) {
-            String name = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
-            employeeMapper.insert(new Employee(null, name, "M", name + "@163.com", 1));
+        for (int i = 0; i < 1000; ++i) { // 随机生成1000条用户数据插入到数据库中
+            String name = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5); // 作为名字的生成
+            int id = Math.random() > 0.5 ? 1 : 2;
+            String gender = Math.random() > 0.5 ? "M" : "F";
+            employeeMapper.insert(new Employee(null, name, gender, name + "@163.com", id));
         }
         System.out.println("批量插入完毕");
     }

@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+//@CrossOrigin
 public class EmployeeController {
 
     @Autowired
@@ -179,13 +180,13 @@ public class EmployeeController {
      * @param pn
      * @return
      */
-    @RequestMapping("/conditionalEmp")
+    @PostMapping("/conditionalEmp")
     public Msg getEmpByCondition(Employee employee, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+//        System.out.println(employee);
         PageHelper.startPage(pn, 5);
         List<Employee> employees = employeeService.getEmpByCondition(employee);
         PageInfo<Employee> page = new PageInfo<>(employees, 5);
         List<Department> depts = departmentService.getDept();
         return Msg.success().add("pages", page).add("departments", depts);
-
     }
 }
